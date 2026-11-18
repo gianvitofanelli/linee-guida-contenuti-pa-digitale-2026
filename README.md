@@ -11,6 +11,7 @@ Il testo sta nei file di `content/`, un file per capitolo. Il sito si genera da 
 | Testo dei capitoli (HTML) | `content/NN-nome.html` |
 | Ordine, titoli e gruppi dei capitoli | `chapters.json` |
 | Nome del sito, versione, indirizzo del repository | `site.json` |
+| File .md da scaricare (quali capitoli in ogni file) | `esportazioni.json` |
 | Aspetto e comportamento del sito | `assets/style.css`, `assets/site.js` |
 | Generatore del sito | `build.py` |
 | Pubblicazione su GitHub Pages | `.github/workflows/pages.yml` |
@@ -31,7 +32,7 @@ Serve solo Python 3, senza librerie esterne.
 python build.py
 ```
 
-Il sito compare nella cartella `_site/`. Per vederlo con la ricerca funzionante, avvia un server locale:
+Il sito compare nella cartella `_site/`. I file .md della pagina Intelligenza artificiale si generano da soli dal testo dei capitoli, in `_site/download/`: non vanno modificati a mano. Per vederlo con la ricerca funzionante, avvia un server locale:
 
 ```
 python -m http.server --directory _site 8000
@@ -47,4 +48,4 @@ e apri `http://localhost:8000`.
 
 ## Cosa contiene il testo
 
-Capitoli 0 a 11, appendici A e B e il pacchetto per Figma. I testi di esempio, i nomi di enti, persone, CUP e numeri di protocollo sono fittizi.
+Capitoli 0 a 11, appendici A e B e la pagina Intelligenza artificiale (assistenti e Figma). I testi di esempio, i nomi di enti, persone, CUP e numeri di protocollo sono fittizi.

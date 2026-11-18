@@ -91,6 +91,11 @@ table.sino th:last-child::before{content:"✕ ";color:var(--no)}
 .btn{display:inline-block;font:600 15px/1.2 var(--f-ui);padding:9px 20px;margin:2px 6px 2px 0;border-radius:4px;border:1px solid var(--primary);color:var(--primary);background:var(--bg);white-space:nowrap}
 blockquote p>.btn:first-child,td>.btn:first-of-type{background:var(--primary);color:var(--primary-ink)}
 
+.dl{display:inline-block;font:600 15px/1.2 var(--f-ui);padding:8px 16px;border:1px solid var(--primary);border-radius:4px;color:var(--primary);text-decoration:none;background:var(--bg);white-space:nowrap}
+.dl:hover{background:var(--primary);color:var(--primary-ink)}
+.dl-main{background:var(--primary);color:var(--primary-ink)}
+.dl-main:hover{background:var(--primary-hover);color:var(--primary-ink)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .pnav{display:flex;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:20px;flex-wrap:wrap}
 .pn{display:flex;flex-direction:column;text-decoration:none;font-weight:600;max-width:48%}
 .pn span{font-size:14px;font-weight:400;color:var(--muted)}

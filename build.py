@@ -5,7 +5,8 @@ Uso:  python build.py
 Fonti: site.json (dati del sito), chapters.json (ordine e titoli), content/*.html (testo dei capitoli).
 Non servono librerie esterne.
 """
-import json, re, shutil, html
+import json, re, shutil, html, zipfile
+from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -13,6 +14,156 @@ OUT = ROOT / "_site"
 site = json.loads((ROOT / "site.json").read_text(encoding="utf8"))
 chapters = json.loads((ROOT / "chapters.json").read_text(encoding="utf8"))
 esc = html.escape
+export = json.loads((ROOT / "esportazioni.json").read_text(encoding="utf8"))
+
+
+# ---- Esportazione in Markdown (HTML dei capitoli -> .md) ----
+VOID = {"br", "hr", "img", "meta", "link", "input"}
+
+
+class Node:
+    def __init__(self, tag, attrs=None):
+        self.tag, self.attrs, self.kids = tag, dict(attrs or []), []
+
+
+class Tree(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.root = Node("root")
+        self.stack = [self.root]
+
+    def handle_starttag(self, tag, attrs):
+        n = Node(tag, attrs)
+        self.stack[-1].kids.append(n)
+        if tag not in VOID:
+            self.stack.append(n)
+
+    def handle_endtag(self, tag):
+        if tag in VOID:
+            return
+        for i in range(len(self.stack) - 1, 0, -1):
+            if self.stack[i].tag == tag:
+                del self.stack[i:]
+                break
+
+    def handle_data(self, data):
+        self.stack[-1].kids.append(data)
+
+
+def inline(node, table=False):
+    out = ""
+    for k in node.kids:
+        if isinstance(k, str):
+            out += re.sub(r"\s+", " ", k)
+            continue
+        t, inner = k.tag, inline(k, table)
+        if t in ("strong", "b"):
+            out += f"**{inner.strip()}**" if inner.strip() else ""
+        elif t in ("em", "i"):
+            out += f"*{inner.strip()}*" if inner.strip() else ""
+        elif t == "code":
+            out += f"`{inner}`"
+        elif t == "a":
+            out += f"[{inner.strip()}]({k.attrs.get('href', '')})"
+        elif t == "span" and "btn" in k.attrs.get("class", ""):
+            out += f"[{inner.strip()}]"
+        elif t == "br":
+            out += " " if table else "  \n"
+        elif t in ("ul", "ol", "p"):
+            out += " " + inner + " "
+        else:
+            out += inner
+    return out.replace("|", "\\|") if table else out
+
+
+def list_md(node, depth=0):
+    lines, n = [], 0
+    for li in [k for k in node.kids if not isinstance(k, str) and k.tag == "li"]:
+        n += 1
+        mark = f"{n}." if node.tag == "ol" else "-"
+        pad = "  " * depth
+        text, subs = "", []
+        for k in li.kids:
+            if not isinstance(k, str) and k.tag in ("ul", "ol"):
+                subs.append(k)
+            elif not isinstance(k, str) and k.tag == "p":
+                text += inline(k).strip() + " "
+            else:
+                text += re.sub(r"\s+", " ", k) if isinstance(k, str) else inline(Wrap(k))
+        lines.append(f"{pad}{mark} {text.strip()}")
+        for sub in subs:
+            lines.extend(list_md(sub, depth + 1))
+    return lines
+
+
+class Wrap(Node):
+    def __init__(self, child):
+        super().__init__("x")
+        self.kids = [child]
+
+
+def table_md(node):
+    rows = []
+    def collect(n):
+        for k in n.kids:
+            if isinstance(k, str):
+                continue
+            if k.tag == "tr":
+                rows.append([inline(c, True).strip() for c in k.kids if not isinstance(c, str) and c.tag in ("th", "td")])
+            else:
+                collect(k)
+    collect(node)
+    if not rows:
+        return ""
+    width = max(len(r) for r in rows)
+    rows = [r + [""] * (width - len(r)) for r in rows]
+    out = ["| " + " | ".join(rows[0]) + " |", "| " + " | ".join("---" for _ in range(width)) + " |"]
+    out += ["| " + " | ".join(r) + " |" for r in rows[1:]]
+    return "\n".join(out)
+
+
+def blocks(node):
+    out = []
+    for k in node.kids:
+        if isinstance(k, str):
+            if k.strip():
+                out.append(re.sub(r"\s+", " ", k).strip())
+            continue
+        t = k.tag
+        if t == "p":
+            out.append(inline(k).strip())
+        elif t in ("h2", "h3", "h4"):
+            out.append("#" * int(t[1]) + " " + inline(k).strip())
+        elif t in ("ul", "ol"):
+            out.append("\n".join(list_md(k)))
+        elif t == "table":
+            out.append(table_md(k))
+        elif t == "pre":
+            txt = "".join(x if isinstance(x, str) else inline(x) for x in k.kids)
+            out.append("```\n" + txt.strip("\n") + "\n```")
+        elif t == "blockquote":
+            inner = "\n\n".join(b for b in blocks(k) if b)
+            out.append("\n".join(("> " + l).rstrip() for l in inner.split("\n")))
+        else:
+            out.extend(blocks(k))
+    return [b for b in out if b]
+
+
+def to_md(fragment):
+    tree = Tree()
+    tree.feed(fragment)
+    return "\n\n".join(blocks(tree.root)) + "\n"
+
+
+def chapter_md(c, body):
+    m = re.match(r"(Capitolo|Appendice) (\w+)", c["kicker"])
+    head = f"{m.group(2)}. {c['title']}" if m and m.group(1) == "Capitolo" else (
+        f"Appendice {m.group(2)}. {c['title']}" if m else c["title"])
+    return f"# {head}\n\n" + to_md(body)
+
+
+def kb(n):
+    return f"{max(1, round(n / 1024))} kB"
 
 
 def nav_html(current):
@@ -96,6 +247,49 @@ def page(title, body, current, crumbs, extra_head=""):
 """
 
 
+def write_exports(bodies):
+    """Scrive i file .md e lo zip in _site/download/ e restituisce la tabella dei download."""
+    dl = OUT / "download"
+    dl.mkdir()
+    by_slug = {c["slug"]: c for c in chapters}
+    md = {slug: chapter_md(by_slug[slug], bodies[slug]) for slug in bodies if slug != "intelligenza-artificiale"}
+    files = {}
+    for f in export["file"]:
+        text = ""
+        if f.get("intro"):
+            text += "# Linee guida di content design – PA digitale 2026\n\n" + f["intro"] + "\n\n"
+        text += "\n".join(md[s] for s in f["capitoli"])
+        files[f["file"]] = text
+    comp = export["completo"]
+    files[comp["file"]] = (
+        f"# {comp['titolo']} (versione {site['versione']})\n\n"
+        + "\n".join(md[c["slug"]] for c in chapters if c["slug"] in md and c["slug"] != "fonti")
+    )
+    for name, text in files.items():
+        (dl / name).write_text(text, encoding="utf8")
+    with zipfile.ZipFile(dl / export["zip"], "w", zipfile.ZIP_DEFLATED) as z:
+        for name in files:
+            z.write(dl / name, name)
+
+    def row(name, desc):
+        size = kb((dl / name).stat().st_size)
+        return (
+            f'<tr><td><code>{esc(name)}</code></td><td>{esc(desc)}</td>'
+            f'<td><a class="dl" href="download/{esc(name)}" download>Scarica<span class="sr"> {esc(name)}</span> (MD, {size})</a></td></tr>'
+        )
+
+    rows = "".join(row(f["file"], f["descrizione"]) for f in export["file"])
+    rows += row(comp["file"], comp["descrizione"])
+    zrow = (
+        f'<p><a class="dl dl-main" href="download/{esc(export["zip"])}" download>Scarica tutti i file '
+        f'(ZIP, {kb((dl / export["zip"]).stat().st_size)})</a></p>'
+    )
+    return (
+        zrow + '<div class="tbl"><table class="plain"><thead><tr><th>File</th><th>Contenuto</th><th>Download</th></tr></thead>'
+        f"<tbody>{rows}</tbody></table></div>"
+    )
+
+
 def build():
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -104,9 +298,12 @@ def build():
         shutil.copy(f, OUT / "assets" / f.name)
     (OUT / ".nojekyll").write_text("")
 
+    bodies = {c["slug"]: (ROOT / "content" / c["file"]).read_text(encoding="utf8").strip() for c in chapters}
+    download_html = write_exports(bodies)
+
     index = []
     for n, c in enumerate(chapters):
-        body = (ROOT / "content" / c["file"]).read_text(encoding="utf8").strip()
+        body = bodies[c["slug"]].replace("{{DOWNLOAD}}", download_html)
         text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", body))).strip()
         index.append({"slug": c["slug"], "title": c["title"], "num": c["num"], "text": text})
         prev = chapters[n - 1] if n else None

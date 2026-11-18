@@ -1,0 +1,21 @@
+{
+  "completo": {
+    "file": "linee-guida-content-design-completo.md",
+    "titolo": "Linee guida di content design – PA digitale 2026",
+    "descrizione": "Tutti i capitoli in un unico file"
+  },
+  "zip": "linee-guida-content-design-md.zip",
+  "file": [
+    {
+      "file": "overview.md",
+      "descrizione": "Come usare le linee guida, principi, voce e tono, checklist e governance (capitoli 0, 1, 2 e 11)",
+      "capitoli": ["come-usare", "principi", "voce-e-tono", "governance"],
+      "intro": "Queste linee guida servono a scrivere e rivedere i testi di PA digitale 2026: sito pubblico, area riservata, microtesti dell’interfaccia, Pec, avvisi e allegati. Lingua: italiano. Applicale a ogni testo che scrivi o proponi nel design.\n\nFile di queste linee guida:\n- `overview.md`: fonti, principi, voce e tono, checklist e governance.\n- `writing-rules.md`: linguaggio chiaro e inclusivo.\n- `conventions.md`: convenzioni redazionali dalla A alla Z.\n- `microcopy.md`: strutturare i contenuti, pulsanti, campi, errori, modali, conferme, stati vuoti.\n- `content-types.md`: avvisi, notizie, domande frequenti, guide, Pec, contenuti con valore giuridico.\n- `lexicon.md`: glossario e parole da sostituire."
+    },
+    {"file": "writing-rules.md", "descrizione": "Linguaggio chiaro e linguaggio inclusivo (capitoli 3 e 4)", "capitoli": ["linguaggio-chiaro", "linguaggio-inclusivo"]},
+    {"file": "conventions.md", "descrizione": "Convenzioni redazionali dalla A alla Z (capitolo 5)", "capitoli": ["convenzioni"]},
+    {"file": "microcopy.md", "descrizione": "Strutturare i contenuti e microtesti per componente (capitoli 6 e 7)", "capitoli": ["struttura", "microtesti"]},
+    {"file": "content-types.md", "descrizione": "Tipi di contenuto e contenuti con valore giuridico (capitoli 8 e 9)", "capitoli": ["tipi-di-contenuto", "contenuti-giuridici"]},
+    {"file": "lexicon.md", "descrizione": "Glossario e parole da sostituire (capitolo 10 e appendice A)", "capitoli": ["glossario", "formule-da-sostituire"]}
+  ]
+}
