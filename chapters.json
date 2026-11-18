@@ -1,0 +1,122 @@
+[
+ {
+  "slug": "come-usare",
+  "file": "00-come-usare.html",
+  "group": "Fondamenti",
+  "num": "0",
+  "kicker": "Capitolo 0",
+  "title": "Come usare queste linee guida"
+ },
+ {
+  "slug": "principi",
+  "file": "01-principi.html",
+  "group": "Fondamenti",
+  "num": "1",
+  "kicker": "Capitolo 1",
+  "title": "Principi"
+ },
+ {
+  "slug": "voce-e-tono",
+  "file": "02-voce-e-tono.html",
+  "group": "Fondamenti",
+  "num": "2",
+  "kicker": "Capitolo 2",
+  "title": "Voce e tono"
+ },
+ {
+  "slug": "linguaggio-chiaro",
+  "file": "03-linguaggio-chiaro.html",
+  "group": "Scrittura",
+  "num": "3",
+  "kicker": "Capitolo 3",
+  "title": "Linguaggio chiaro"
+ },
+ {
+  "slug": "linguaggio-inclusivo",
+  "file": "04-linguaggio-inclusivo.html",
+  "group": "Scrittura",
+  "num": "4",
+  "kicker": "Capitolo 4",
+  "title": "Linguaggio inclusivo"
+ },
+ {
+  "slug": "convenzioni",
+  "file": "05-convenzioni.html",
+  "group": "Scrittura",
+  "num": "5",
+  "kicker": "Capitolo 5",
+  "title": "Convenzioni redazionali dalla A alla Z"
+ },
+ {
+  "slug": "struttura",
+  "file": "06-struttura.html",
+  "group": "Scrittura",
+  "num": "6",
+  "kicker": "Capitolo 6",
+  "title": "Strutturare i contenuti"
+ },
+ {
+  "slug": "microtesti",
+  "file": "07-microtesti.html",
+  "group": "Interfaccia e contenuti",
+  "num": "7",
+  "kicker": "Capitolo 7",
+  "title": "Microtesti per componente"
+ },
+ {
+  "slug": "tipi-di-contenuto",
+  "file": "08-tipi-di-contenuto.html",
+  "group": "Interfaccia e contenuti",
+  "num": "8",
+  "kicker": "Capitolo 8",
+  "title": "Tipi di contenuto"
+ },
+ {
+  "slug": "contenuti-giuridici",
+  "file": "09-contenuti-giuridici.html",
+  "group": "Interfaccia e contenuti",
+  "num": "9",
+  "kicker": "Capitolo 9",
+  "title": "Contenuti con valore giuridico"
+ },
+ {
+  "slug": "glossario",
+  "file": "10-glossario.html",
+  "group": "Riferimento",
+  "num": "10",
+  "kicker": "Capitolo 10",
+  "title": "Glossario di PA digitale 2026"
+ },
+ {
+  "slug": "governance",
+  "file": "11-governance.html",
+  "group": "Riferimento",
+  "num": "11",
+  "kicker": "Capitolo 11",
+  "title": "Checklist di revisione e governance"
+ },
+ {
+  "slug": "formule-da-sostituire",
+  "file": "12-formule-da-sostituire.html",
+  "group": "Riferimento",
+  "num": "A",
+  "kicker": "Appendice A",
+  "title": "Parole e formule da sostituire"
+ },
+ {
+  "slug": "fonti",
+  "file": "13-fonti.html",
+  "group": "Riferimento",
+  "num": "B",
+  "kicker": "Appendice B",
+  "title": "Fonti"
+ },
+ {
+  "slug": "pacchetto-figma",
+  "file": "14-pacchetto-figma.html",
+  "group": "Esportazioni",
+  "num": "",
+  "kicker": "Esportazione",
+  "title": "Pacchetto per Figma"
+ }
+]

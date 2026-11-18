@@ -1,0 +1,144 @@
+<p>I microtesti sono le parole dell’interfaccia: pulsanti, etichette, messaggi. Sono brevi, ma decidono se una persona riesce a completare un’azione.</p>
+<h2 id="microtesti--7-1-pulsanti-e-call-to-action">7.1 Pulsanti e call to action</h2>
+<ul>
+<li>Inizia con un verbo all’imperativo che descrive l’azione: “Invia candidatura”, “Scarica le schede DNSH”, “Accedi a PA digitale 2026”.</li>
+<li>Sentence case: “Invia richiesta”, non “Invia Richiesta” né “INVIA”.</li>
+<li>Il testo del pulsante coincide con quello citato nel testo che lo spiega.</li>
+<li>Non usare: “OK”, “Clicca qui”, “Vai”, “Avanti” come unica etichetta di un’azione che invia dati, “Nuovo elemento”.</li>
+<li>“Vai a” è ammesso per la navigazione verso una sezione: “Vai a tutti gli avvisi”. Usa la stessa formula in tutto il sito.</li>
+<li>Nelle modali, il pulsante secondario per chiudere senza agire è sempre “Annulla”.</li>
+</ul>
+<div class="tbl"><table class="sino"><thead><tr><th>Sì</th><th>No</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accedi a PA digitale 2026</td>
+<td>VAI ALL’AREA RISERVATA</td>
+</tr>
+<tr>
+<td>Compila il modulo</td>
+<td>Compila il form</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="microtesti--7-2-campi-dei-moduli">7.2 Campi dei moduli</h2>
+<h3 id="microtesti--etichette">Etichette</h3>
+<ul>
+<li>Ogni campo ha un’etichetta visibile: un sintagma nominale breve e specifico, senza verbo. “Potenza media assorbita”, “Spazio totale di archiviazione disponibile”.</li>
+<li>Se lo spazio non basta, concorda una versione ridotta che conservi la parola chiave: “Capacità media di calcolo per gestione workload” → “Capacità media calcolo workload”.</li>
+<li>Un’etichetta non è una parola ambigua: “Rappresento” non dice cosa scegliere. Scrivi “Tipo di organizzazione”.</li>
+</ul>
+<h3 id="microtesti--testo-di-supporto-helper-text">Testo di supporto (helper text)</h3>
+<ul>
+<li>Testo fisso sotto il campo: un’istruzione all’imperativo, seguita se serve dalla definizione del termine. “Indica il valore percentuale della potenza media assorbita dal data center. Con potenza assorbita si intende la potenza che il data center utilizza.”</li>
+<li>Per i formati, indica la regola: “Il CUP è composto da 15 caratteri, lettere e numeri.”</li>
+</ul>
+<h3 id="microtesti--campi-obbligatori-e-facoltativi">Campi obbligatori e facoltativi</h3>
+<p>Segna i campi <strong>facoltativi</strong> con l’etichetta “(facoltativo)” e non segnare quelli obbligatori. Nei moduli di PA digitale 2026 la maggior parte dei campi è obbligatoria: l’asterisco su tutti i campi aggiunge rumore e non è accessibile.</p>
+<div class="tbl"><table class="sino"><thead><tr><th>Sì</th><th>No</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Telefono (facoltativo)</td>
+<td>I campi con asterisco sono obbligatori · Email<em> · Richiedente</em> · Argomento*</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="microtesti--placeholder-menu-a-tendina-contatori">Placeholder, menu a tendina, contatori</h3>
+<ul>
+<li><strong>Placeholder</strong>: solo per barre di ricerca e campi di testo libero senza vincoli. Non sostituisce l’etichetta.</li>
+<li><strong>Menu a tendina</strong>: indica cosa scegliere. “Seleziona l’avviso”, non “Seleziona un’opzione”.</li>
+<li><strong>Contatore di caratteri</strong>: “0 caratteri su 150”. Usa il punto per le migliaia: “32.000”.</li>
+</ul>
+<h3 id="microtesti--validazione">Validazione</h3>
+<ul>
+<li>Non mostrare errori mentre la persona sta ancora compilando il campo per la prima volta. Valida quando esce dal campo o quando invia.</li>
+<li>Quando il campo è in errore, togli il messaggio appena il valore diventa corretto.</li>
+<li>Nei gruppi di checkbox e radio, il messaggio di errore riguarda tutto il gruppo, non la singola opzione.</li>
+</ul>
+<h2 id="microtesti--7-3-messaggi-di-errore">7.3 Messaggi di errore</h2>
+<p>Struttura: titolo che descrive il problema senza colpe, causa, soluzione, eventuale via d’uscita.</p>
+<div class="tbl"><table class="plain">
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Esempio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Titolo</td>
+<td>Non è stato possibile inviare la domanda</td>
+</tr>
+<tr>
+<td>Causa</td>
+<td>La connessione si è interrotta durante l’invio.</td>
+</tr>
+<tr>
+<td>Soluzione</td>
+<td>I dati sono salvati. Riprova tra qualche minuto.</td>
+</tr>
+<tr>
+<td>Via d’uscita</td>
+<td>Riprova a inviare</td>
+</tr>
+</tbody>
+</table></div>
+<div class="tbl"><table class="sino"><thead><tr><th>Sì</th><th>No</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Il codice fiscale deve avere 16 caratteri: verifica di averli inseriti tutti.</td>
+<td>Campo non valido</td>
+</tr>
+<tr>
+<td>Non riusciamo a caricare gli avvisi. Aggiorna la pagina o riprova tra qualche minuto.</td>
+<td>Caricamento... (che resta sulla pagina senza esito)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="microtesti--7-4-modali-di-conferma">7.4 Modali di conferma</h2>
+<ul>
+<li>Titolo: una domanda esplicita. “Vuoi eliminare l’utenza di Maria Rossi?”</li>
+<li>Descrizione: cosa succede e se si può rimediare.</li>
+<li>Pulsante primario: lo stesso verbo del titolo (“Elimina utenza”). Pulsante secondario: “Annulla”.</li>
+<li>Non usare “Attenzione!”, “Sei sicuro?”, “Conferma”.</li>
+</ul>
+<blockquote>
+<p><strong>Esempio</strong></p>
+<p><strong>Vuoi inviare la candidatura?</strong></p>
+<p>Dopo l’invio non potrai modificare i servizi selezionati. Se hai bisogno di cambiarli, dovrai ritirare la candidatura e presentarne una nuova entro la scadenza dell’avviso.</p>
+<p><span class="btn">Invia candidatura</span> <span class="btn">Annulla</span></p>
+</blockquote>
+<h2 id="microtesti--7-5-messaggi-di-conferma">7.5 Messaggi di conferma</h2>
+<p>Struttura: azione completata, effetti e numeri di riferimento, passi successivi, eventuale azione.</p>
+<blockquote>
+<p><strong>Esempio</strong></p>
+<p><strong>Domanda inviata</strong></p>
+<p>Il numero di protocollo è 2026/000123.</p>
+<p>L’esito arriva via Pec entro 30 giorni. Puoi seguire lo stato della domanda nell’area riservata.</p>
+<p><span class="btn">Scarica la ricevuta</span></p>
+</blockquote>
+<h2 id="microtesti--7-6-stati-vuoti">7.6 Stati vuoti</h2>
+<p>Spiega lo stato senza toni negativi, suggerisci come uscirne, offri un’azione.</p>
+<div class="tbl"><table class="sino"><thead><tr><th>Sì</th><th>No</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Non hai ancora candidature attive. Scopri gli avvisi aperti per il tuo ente.<br><span class="btn">Vai agli avvisi</span></td>
+<td>Nessun risultato</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="microtesti--7-7-notifiche-e-avvisi-di-scadenza">7.7 Notifiche e avvisi di scadenza</h2>
+<ul>
+<li>Titolo: il fatto, con la data. “Scadenza contrattualizzazione: 15 ottobre 2026”.</li>
+<li>Testo: cosa fare e cosa succede se non si fa, senza toni allarmistici.</li>
+<li>Non usare il colore o l’icona come unico segnale: il testo deve bastare da solo.</li>
+</ul>
+<h2 id="microtesti--7-8-tooltip">7.8 Tooltip</h2>
+<p>Solo per informazioni accessorie. Un’informazione necessaria per completare il compito non va in un tooltip: va nel testo di supporto o nel testo della pagina.</p>

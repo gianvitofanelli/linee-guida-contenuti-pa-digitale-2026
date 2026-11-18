@@ -1,0 +1,38 @@
+name: Proposta di modifica
+description: Proponi di cambiare una regola o un esempio delle linee guida.
+title: "Proposta: "
+labels: ["proposta"]
+body:
+  - type: input
+    id: capitolo
+    attributes:
+      label: Capitolo o sezione
+      description: Per esempio "5.1 Maiuscole" o "8.5 Pec, email e notifiche agli enti".
+    validations:
+      required: true
+  - type: textarea
+    id: regola
+    attributes:
+      label: Regola attuale
+      description: Copia il testo della regola come è scritta oggi.
+    validations:
+      required: true
+  - type: textarea
+    id: problema
+    attributes:
+      label: Problema
+      description: Cosa non funziona o cosa manca.
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Proposta
+      description: Come dovrebbe essere scritta la regola.
+    validations:
+      required: true
+  - type: textarea
+    id: esempio
+    attributes:
+      label: Esempio
+      description: Un testo "Sì" e uno "No" che mostrano la differenza.
