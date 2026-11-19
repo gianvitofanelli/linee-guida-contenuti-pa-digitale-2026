@@ -164,3 +164,15 @@ blockquote p>.btn:first-child,td>.btn:first-of-type{background:var(--primary);co
   .prose .tbl{width:calc(100vw - 32px)}
 }
 @media (prefers-reduced-motion:reduce){.back-to-top,.sidebar{transition:none!important}}
+
+/* Schede impilate (<=600px): le tabelle con 3+ colonne diventano blocchi; i ruoli ARIA mantengono la semantica */
+@media (max-width:600px){
+  .tbl table.stack{min-width:0;display:block}
+  .tbl table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .tbl table.stack tbody{display:block}
+  .tbl table.stack tr{display:block;border:1px solid var(--line);border-top:3px solid var(--primary);margin:0 0 14px;background:var(--bg)}
+  .tbl table.stack td{display:block;border:0;border-bottom:1px solid var(--line-soft);padding:8px 12px}
+  .tbl table.stack td:last-child{border-bottom:0}
+  .tbl table.stack td::before{content:attr(data-label) / "";display:block;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+  .tbl table.stack td:empty{display:none}
+}

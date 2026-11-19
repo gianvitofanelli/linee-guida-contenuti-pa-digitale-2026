@@ -56,6 +56,29 @@
     });
   }
 
+  // Tabelle a schede su schermi stretti: struttura visiva a blocchi, semantica di tabella ripristinata con i ruoli ARIA
+  var narrowMq = window.matchMedia('(max-width: 600px)');
+  function stackTables() {
+    document.querySelectorAll('.tbl table').forEach(function (t) {
+      var on = narrowMq.matches && t.querySelectorAll('thead th').length > 2;
+      t.classList.toggle('stack', on);
+      var map = [['table', 'table'], ['thead', 'rowgroup'], ['tbody', 'rowgroup'], ['tr', 'row'], ['th', 'columnheader'], ['td', 'cell']];
+      map.forEach(function (m) {
+        (m[0] === 'table' ? [t] : t.querySelectorAll(m[0])).forEach(function (el) {
+          if (on) el.setAttribute('role', m[1]); else el.removeAttribute('role');
+        });
+      });
+      if (on) {
+        var heads = Array.prototype.map.call(t.querySelectorAll('thead th'), function (h) { return h.textContent.trim(); });
+        t.querySelectorAll('tbody tr').forEach(function (tr) {
+          Array.prototype.forEach.call(tr.children, function (td, i) { if (heads[i]) td.setAttribute('data-label', heads[i]); });
+        });
+      }
+    });
+  }
+  stackTables();
+  (narrowMq.addEventListener ? narrowMq.addEventListener.bind(narrowMq, 'change') : narrowMq.addListener.bind(narrowMq))(stackTables);
+
   // Tabelle scorrevoli: raggiungibili da tastiera e annunciate come regioni
   document.querySelectorAll('.tbl').forEach(function (w) {
     var t = w.querySelector('table'), hc = t ? t.querySelectorAll('thead th').length : 0;

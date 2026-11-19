@@ -2,6 +2,7 @@
 
 ## 1.2 (bozza) – 18 novembre 2026
 
+- Tabelle su schermi stretti (fino a 600 px): le tabelle con tre o più colonne diventano schede impilate, con la semantica di tabella mantenuta tramite ruoli ARIA.
 - Sito su mobile: intestazione fissa in alto con pulsanti Cerca e Capitoli, indice dei capitoli a pannello laterale (chiusura con Esc, focus gestito), ricerca comprimibile, tabelle scorrevoli con larghezza minima. Su tutti i dispositivi: pulsante «Torna su» fisso.
 - Accessibilità del sito: indicatore di focus ad alto contrasto, gerarchia dei titoli corretta in «Principi» e «Fonti», tabelle scorrevoli raggiungibili da tastiera, ricerca con annuncio dei risultati e frecce direzionali, intestazioni di colonna con `scope`.
 - Il testo passa su GitHub: un file per capitolo, revisione con pull request e issue.
