@@ -2,6 +2,7 @@
 
 ## 1.2 (bozza) – 18 novembre 2026
 
+- Sito su mobile: intestazione fissa in alto con pulsanti Cerca e Capitoli, indice dei capitoli a pannello laterale (chiusura con Esc, focus gestito), ricerca comprimibile, tabelle scorrevoli con larghezza minima. Su tutti i dispositivi: pulsante «Torna su» fisso.
 - Accessibilità del sito: indicatore di focus ad alto contrasto, gerarchia dei titoli corretta in «Principi» e «Fonti», tabelle scorrevoli raggiungibili da tastiera, ricerca con annuncio dei risultati e frecce direzionali, intestazioni di colonna con `scope`.
 - Il testo passa su GitHub: un file per capitolo, revisione con pull request e issue.
 - Tolto il capitolo "Decisioni sulle regole". La checklist e la governance diventano il capitolo 11.

@@ -222,7 +222,11 @@ def page(title, body, current, crumbs, extra_head=""):
   <div class="slim"><div class="wrap"><span>{esc(site["ente"])}</span></div></div>
   <div class="center"><div class="wrap center-in">
     <a class="brand" href="index.html"><span class="brand-name">{esc(site["titolo"])}</span><span class="brand-sub">{esc(site["sottotitolo"])} · versione {esc(site["versione"])}</span></a>
-    <div class="search" role="search">
+    <div class="header-tools">
+      <button type="button" class="tool-btn" id="search-toggle" aria-expanded="false" aria-controls="search-box"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15zm5.5-2 5 5"/></svg><span>Cerca</span></button>
+      <button type="button" class="tool-btn" id="nav-toggle" aria-expanded="false" aria-controls="nav"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg><span>Capitoli</span></button>
+    </div>
+    <div class="search" role="search" id="search-box">
       <label for="q">Cerca nelle linee guida</label>
       <input id="q" type="search" placeholder="Per esempio: Pec, grassetto, CUP" autocomplete="off" aria-controls="results" aria-describedby="q-status">
       <div id="results" class="results" hidden></div>
@@ -231,9 +235,10 @@ def page(title, body, current, crumbs, extra_head=""):
   </div></div>
 </header>
 <div class="wrap layout">
-  <aside class="sidebar" id="sidebar" aria-label="Capitoli">
-    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav">Capitoli</button>
-    <nav id="nav" aria-label="Indice">
+  <div class="nav-backdrop" id="nav-backdrop" hidden></div>
+  <aside class="sidebar" id="sidebar">
+    <nav id="nav" aria-label="Capitoli">
+      <div class="nav-head"><span>Capitoli</span><button type="button" class="tool-btn tool-close" id="nav-close"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 5l14 14M19 5L5 19"/></svg><span>Chiudi</span></button></div>
 {nav_html(current)}
     </nav>
   </aside>
@@ -243,6 +248,7 @@ def page(title, body, current, crumbs, extra_head=""):
   </main>
 </div>
 <footer class="site-footer"><div class="wrap">{esc(site["ente"])} · {esc(site["titolo"])} {esc(site["sottotitolo"])} · versione {esc(site["versione"])}</div></footer>
+<button type="button" class="back-to-top" id="back-to-top" aria-label="Torna all’inizio della pagina"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="24" height="24"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg></button>
 <script src="assets/site.js"></script>
 </body>
 </html>
