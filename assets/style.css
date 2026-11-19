@@ -4,7 +4,7 @@
   --primary:#0066cc; --primary-hover:#004d99; --primary-ink:#ffffff;
   --slim:#004d99; --text:#1a1a1a; --muted:#5c6f82; --line:#d9dadb; --line-soft:#e6e9f2;
   --bg:#ffffff; --bg-soft:#f2f7fc; --bg-note:#f2f7fc;
-  --ok:#008758; --ok-soft:#e7f4ef; --no:#d9364f; --no-soft:#fbeaed; --focus:#ff9900;
+  --ok:#008758; --ok-soft:#e7f4ef; --no:#d9364f; --no-soft:#fbeaed; 
   --f-ui:"Titillium Web","Segoe UI",system-ui,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
 }
@@ -13,7 +13,11 @@ html{scroll-padding-top:16px}
 body{margin:0;background:var(--bg);color:var(--text);font:400 18px/1.6 var(--f-ui)}
 a{color:var(--primary)}
 a:hover{color:var(--primary-hover)}
-:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:2px}
+:focus-visible{outline:3px solid var(--text);outline-offset:2px;border-radius:2px}
+.slim :focus-visible,.center :focus-visible,.site-footer :focus-visible{outline-color:#fff}
+.skip:focus-visible{outline-color:#fff}
+.main:focus{outline:none}
+.results :focus-visible{outline-color:var(--text);outline-offset:-3px}
 .skip{position:absolute;left:-999px;top:0;background:var(--primary);color:var(--primary-ink);padding:8px 16px;z-index:100}
 .skip:focus{left:0}
 .wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}

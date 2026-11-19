@@ -9,6 +9,20 @@
     });
   }
 
+  // Tabelle scorrevoli: raggiungibili da tastiera e annunciate come regioni
+  document.querySelectorAll('.tbl').forEach(function (w) {
+    function sync() {
+      if (w.scrollWidth > w.clientWidth + 1) {
+        var h = w.previousElementSibling, label = '';
+        while (h && !/^H[1-6]$/.test(h.tagName)) h = h.previousElementSibling;
+        label = h ? h.textContent : 'Contenuto';
+        w.setAttribute('tabindex', '0'); w.setAttribute('role', 'region');
+        w.setAttribute('aria-label', 'Tabella scorrevole: ' + label);
+      } else { w.removeAttribute('tabindex'); w.removeAttribute('role'); w.removeAttribute('aria-label'); }
+    }
+    sync(); window.addEventListener('resize', sync);
+  });
+
   var input = document.getElementById('q');
   var box = document.getElementById('results');
   var index = null;
@@ -29,7 +43,7 @@
   function render(q) {
     var ql = q.trim().toLowerCase();
     box.textContent = '';
-    if (!ql) { box.hidden = true; return; }
+    if (!ql) { box.hidden = true; var s0 = document.getElementById('q-status'); if (s0) s0.textContent = ''; return; }
     load().then(function (d) {
       var hits = d.filter(function (c) { return (c.title + ' ' + c.text).toLowerCase().indexOf(ql) >= 0; });
       if (!hits.length) {
@@ -47,12 +61,23 @@
         a.appendChild(s); a.appendChild(m); box.appendChild(a);
       });
       box.hidden = false;
+      var st = document.getElementById('q-status');
+      if (st) st.textContent = hits.length ? hits.length + (hits.length === 1 ? ' capitolo trovato' : ' capitoli trovati') : 'Nessun capitolo trovato';
     });
   }
 
   if (input) {
     input.addEventListener('input', function () { render(input.value); });
-    input.addEventListener('keydown', function (e) { if (e.key === 'Escape') { box.hidden = true; } });
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { box.hidden = true; }
+      if (e.key === 'ArrowDown') { var a = box.querySelector('a'); if (a && !box.hidden) { e.preventDefault(); a.focus(); } }
+    });
+    box.addEventListener('keydown', function (e) {
+      var links = Array.prototype.slice.call(box.querySelectorAll('a')), i = links.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown' && i >= 0) { e.preventDefault(); (links[i + 1] || links[i]).focus(); }
+      if (e.key === 'ArrowUp' && i >= 0) { e.preventDefault(); (i ? links[i - 1] : input).focus(); }
+      if (e.key === 'Escape') { box.hidden = true; input.focus(); }
+    });
     document.addEventListener('click', function (e) { if (!box.contains(e.target) && e.target !== input) box.hidden = true; });
   }
 

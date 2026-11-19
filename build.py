@@ -203,6 +203,7 @@ def edit_links(c):
 
 
 def page(title, body, current, crumbs, extra_head=""):
+    body = re.sub(r"<th>", '<th scope="col">', body)
     return f"""<!doctype html>
 <html lang="it">
 <head>
@@ -223,8 +224,9 @@ def page(title, body, current, crumbs, extra_head=""):
     <a class="brand" href="index.html"><span class="brand-name">{esc(site["titolo"])}</span><span class="brand-sub">{esc(site["sottotitolo"])} · versione {esc(site["versione"])}</span></a>
     <div class="search" role="search">
       <label for="q">Cerca nelle linee guida</label>
-      <input id="q" type="search" placeholder="Per esempio: Pec, grassetto, CUP" autocomplete="off">
+      <input id="q" type="search" placeholder="Per esempio: Pec, grassetto, CUP" autocomplete="off" aria-controls="results" aria-describedby="q-status">
       <div id="results" class="results" hidden></div>
+      <p id="q-status" class="sr" role="status" aria-live="polite"></p>
     </div>
   </div></div>
 </header>
@@ -235,7 +237,7 @@ def page(title, body, current, crumbs, extra_head=""):
 {nav_html(current)}
     </nav>
   </aside>
-  <main id="contenuto" class="main">
+  <main id="contenuto" class="main" tabindex="-1">
     <nav class="crumbs" aria-label="Percorso"><ol>{crumbs}</ol></nav>
 {body}
   </main>
