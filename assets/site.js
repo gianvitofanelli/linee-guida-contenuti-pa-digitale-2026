@@ -58,6 +58,8 @@
 
   // Tabelle scorrevoli: raggiungibili da tastiera e annunciate come regioni
   document.querySelectorAll('.tbl').forEach(function (w) {
+    var t = w.querySelector('table'), hc = t ? t.querySelectorAll('thead th').length : 0;
+    if (hc && hc <= 2) t.classList.add('narrow');
     function sync() {
       if (w.scrollWidth > w.clientWidth + 1) {
         var h = w.previousElementSibling, label = '';

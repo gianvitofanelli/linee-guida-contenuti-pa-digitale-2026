@@ -155,8 +155,12 @@ blockquote p>.btn:first-child,td>.btn:first-of-type{background:var(--primary);co
   .sidebar a{padding:10px 12px;font-size:17px}
   .pn{max-width:100%}
   body.nav-open{overflow:hidden}
-  .tbl{-webkit-overflow-scrolling:touch;box-shadow:inset -12px 0 8px -10px rgba(0,0,0,.18)}
+  .tbl{-webkit-overflow-scrolling:touch}
+  .tbl[tabindex]{box-shadow:inset -12px 0 8px -10px rgba(0,0,0,.18)}
   .tbl table{min-width:540px}
+  .tbl table.narrow,.tbl table.sino{min-width:0}
+  table.sino td:first-child{width:50%}
+  table.narrow th,table.narrow td{padding:8px 10px}
   .prose .tbl{width:calc(100vw - 32px)}
 }
 @media (prefers-reduced-motion:reduce){.back-to-top,.sidebar{transition:none!important}}
