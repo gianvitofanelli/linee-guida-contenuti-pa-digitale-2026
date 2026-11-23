@@ -12,7 +12,7 @@ Il testo sta nei file di `content/`, un file per capitolo. Il sito si genera da 
 | Ordine, titoli e gruppi dei capitoli | `chapters.json` |
 | Nome del sito, versione, indirizzo del repository | `site.json` |
 | File .md da scaricare (quali capitoli in ogni file) | `esportazioni.json` |
-| Aspetto e comportamento del sito | `assets/style.css`, `assets/site.js` |
+| Aspetto e comportamento del sito | `assets/bootstrap-italia/` (Bootstrap Italia 2.18.3, copia locale), `assets/style.css` (estensioni), `assets/site.js` |
 | Generatore del sito | `build.py` |
 | Pubblicazione su GitHub Pages | `.github/workflows/pages.yml` |
 
@@ -39,6 +39,10 @@ python -m http.server --directory _site 8000
 ```
 
 e apri `http://localhost:8000`.
+
+## Aggiornare Bootstrap Italia
+
+Il sito usa una copia locale di [Bootstrap Italia](https://italia.github.io/bootstrap-italia/) in `assets/bootstrap-italia/`; la versione è scritta in `assets/bootstrap-italia/VERSION.md`. Per aggiornarla, sostituisci i file con quelli del pacchetto npm `bootstrap-italia` (cartella `dist/`) e prova il sito in locale.
 
 ## Pubblicare su GitHub Pages
 
