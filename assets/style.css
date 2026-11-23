@@ -87,3 +87,6 @@ table.sino th:last-child::before{content:"✕ ";color:var(--bs-danger,#d9364f)}
   .tbl table.stack td::before{content:attr(data-label) / "";display:block;font-size:.8125rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--bs-secondary,#5c6f82)}
   .tbl table.stack td:empty{display:none}
 }
+
+/* Logo di PA digitale 2026 (dal sito padigitale2026.gov.it) */
+.it-brand-wrapper a .brand-logo{display:block;width:auto;height:48px;margin-right:16px;flex:0 0 auto}

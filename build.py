@@ -259,7 +259,7 @@ def page(title, body, current, crumbs, extra_head=""):
       <div class="container"><div class="row"><div class="col-12"><div class="it-header-center-content-wrapper">
         <div class="it-brand-wrapper">
           <a href="index.html">
-            {icon("pa", "")}
+            <img class="brand-logo" src="assets/logo-pa-digitale-2026.svg" alt="" width="49" height="48">
             <div class="it-brand-text">
               <div class="it-brand-title">{nome}</div>
               <div class="it-brand-tagline d-none d-md-block">{sub}</div>
@@ -340,7 +340,7 @@ def page(title, body, current, crumbs, extra_head=""):
       <section>
         <div class="row clearfix"><div class="col-sm-12"><div class="it-brand-wrapper">
           <a href="index.html">
-            {icon("pa", "")}
+            <img class="brand-logo" src="assets/logo-pa-digitale-2026.svg" alt="" width="49" height="48">
             <div class="it-brand-text">
               <div class="it-brand-title">{nome}</div>
               <div class="it-brand-tagline d-none d-md-block">{ente} · {sub}</div>
