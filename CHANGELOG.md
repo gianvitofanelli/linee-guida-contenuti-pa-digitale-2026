@@ -3,6 +3,8 @@
 ## 1.2 (bozza) – 18 novembre 2026
 
 - Sito basato su Bootstrap Italia 2.18.3, copiato in `assets/bootstrap-italia/` (nessuna risorsa esterna: i font Titillium Web e Roboto Mono, le icone e gli script si caricano dal sito stesso). Usa i componenti ufficiali: skiplinks, intestazione con fascia sottile, zona centrale e ricerca in finestra modale, menu dei capitoli a comparsa su mobile, barra laterale, breadcrumb, card, pulsanti, tabelle, footer e pulsante «Torna su». `assets/style.css` contiene solo le estensioni (tabelle Sì/No, schede impilate, impaginazione del testo).
+- Revisione dai commenti sull’anteprima: principi più centrati sull’ente; Pec e comunicazioni all’ente con il “voi”, email al referente con il “tu” (sezioni 2.3 e 8.5); pagina Intelligenza artificiale senza nomi di prodotti; tooltip accessibili da tastiera; ordine dei pulsanti nella modale (Annulla prima, azione primaria dopo); campi dei menu a tendina; link alle linee guida di AGID sull’accessibilità nella checklist.
+- Sezione 11.2 Governance spenta in attesa che il processo sia definito: il testo è in `content/da-riattivare/`. Il capitolo 11 si chiama «Checklist di revisione».
 - Logo di PA digitale 2026, preso dal sito padigitale2026.gov.it, nell’intestazione e nel footer (`assets/logo-pa-digitale-2026.svg`).
 - Tabelle su schermi stretti (fino a 600 px): le tabelle con tre o più colonne diventano schede impilate, con la semantica di tabella mantenuta tramite ruoli ARIA.
 - Sito su mobile: intestazione fissa in alto con pulsanti Cerca e Capitoli, indice dei capitoli a pannello laterale (chiusura con Esc, focus gestito), ricerca comprimibile, tabelle scorrevoli con larghezza minima. Su tutti i dispositivi: pulsante «Torna su» fisso.

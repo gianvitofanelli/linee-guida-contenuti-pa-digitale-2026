@@ -22,7 +22,7 @@ Il testo sta nei file di `content/`, un file per capitolo. Il sito si genera da 
 - **Proporre una modifica senza scrivere il testo:** apri una issue con il modulo "Proposta di modifica".
 - **Nuova versione:** aggiorna `site.json` e `CHANGELOG.md` (numero, data, elenco delle modifiche).
 
-Le regole di scrittura per i capitoli sono quelle del capitolo 0 e del capitolo 11 (governance).
+Le regole di scrittura per i capitoli sono quelle del capitolo 0 e del capitolo 11 (checklist).
 
 ## Generare il sito in locale
 

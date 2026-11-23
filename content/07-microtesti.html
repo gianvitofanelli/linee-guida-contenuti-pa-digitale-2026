@@ -49,7 +49,7 @@
 <h3 id="microtesti--placeholder-menu-a-tendina-contatori">Placeholder, menu a tendina, contatori</h3>
 <ul>
 <li><strong>Placeholder</strong>: solo per barre di ricerca e campi di testo libero senza vincoli. Non sostituisce l’etichetta.</li>
-<li><strong>Menu a tendina</strong>: indica cosa scegliere. “Seleziona l’avviso”, non “Seleziona un’opzione”.</li>
+<li><strong>Menu a tendina</strong>: quando puoi, indica cosa scegliere. “Seleziona l’avviso”, meglio di “Seleziona un’opzione”. Se la scelta cambia o non si può nominare in poche parole, usa “Seleziona” e spiega la scelta nell’etichetta del campo.</li>
 <li><strong>Contatore di caratteri</strong>: “0 caratteri su 150”. Usa il punto per le migliaia: “32.000”.</li>
 </ul>
 <h3 id="microtesti--validazione">Validazione</h3>
@@ -111,7 +111,7 @@
 <p><strong>Esempio</strong></p>
 <p><strong>Vuoi inviare la candidatura?</strong></p>
 <p>Dopo l’invio non potrai modificare i servizi selezionati. Se hai bisogno di cambiarli, dovrai ritirare la candidatura e presentarne una nuova entro la scadenza dell’avviso.</p>
-<p><span class="btn">Invia candidatura</span> <span class="btn">Annulla</span></p>
+<p><span class="btn">Annulla</span> <span class="btn primary">Invia candidatura</span></p>
 </blockquote>
 <h2 id="microtesti--7-5-messaggi-di-conferma">7.5 Messaggi di conferma</h2>
 <p>Struttura: azione completata, effetti e numeri di riferimento, passi successivi, eventuale azione.</p>
@@ -120,7 +120,7 @@
 <p><strong>Domanda inviata</strong></p>
 <p>Il numero di protocollo è 2026/000123.</p>
 <p>L’esito arriva via Pec entro 30 giorni. Puoi seguire lo stato della domanda nell’area riservata.</p>
-<p><span class="btn">Scarica la ricevuta</span></p>
+<p><span class="btn primary">Scarica la ricevuta</span></p>
 </blockquote>
 <h2 id="microtesti--7-6-stati-vuoti">7.6 Stati vuoti</h2>
 <p>Spiega lo stato senza toni negativi, suggerisci come uscirne, offri un’azione.</p>
@@ -129,7 +129,7 @@
 </thead>
 <tbody>
 <tr>
-<td>Non hai ancora candidature attive. Scopri gli avvisi aperti per il tuo ente.<br><span class="btn">Vai agli avvisi</span></td>
+<td>Non hai ancora candidature attive. Scopri gli avvisi aperti per il tuo ente.<br><span class="btn primary">Vai agli avvisi</span></td>
 <td>Nessun risultato</td>
 </tr>
 </tbody>
@@ -141,4 +141,4 @@
 <li>Non usare il colore o l’icona come unico segnale: il testo deve bastare da solo.</li>
 </ul>
 <h2 id="microtesti--7-8-tooltip">7.8 Tooltip</h2>
-<p>Solo per informazioni accessorie. Un’informazione necessaria per completare il compito non va in un tooltip: va nel testo di supporto o nel testo della pagina.</p>
+<p>Solo per informazioni accessorie. Deve essere sempre accessibile da tastiera, non solo al passaggio del mouse: compare anche quando l’elemento riceve il focus e si chiude con Esc. Un’informazione necessaria per completare il compito non va in un tooltip: va nel testo di supporto o nel testo della pagina.</p>

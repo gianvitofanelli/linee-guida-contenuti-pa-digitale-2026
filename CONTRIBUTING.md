@@ -2,7 +2,7 @@
 
 ## Prima di modificare
 
-- Segui le regole delle stesse linee guida: capitolo 3 (linguaggio chiaro), capitolo 5 (convenzioni) e capitolo 11 (checklist e governance).
+- Segui le regole delle stesse linee guida: capitolo 3 (linguaggio chiaro), capitolo 5 (convenzioni) e capitolo 11 (checklist).
 - Una modifica a una regola va motivata. Se cambia una regola già in uso, aggiorna anche gli esempi Sì / No.
 - I contenuti con valore giuridico (capitolo 9) non si cambiano senza verifica giuridica.
 

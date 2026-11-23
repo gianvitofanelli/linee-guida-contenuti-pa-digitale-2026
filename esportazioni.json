@@ -8,9 +8,9 @@
   "file": [
     {
       "file": "overview.md",
-      "descrizione": "Come usare le linee guida, principi, voce e tono, checklist e governance (capitoli 0, 1, 2 e 11)",
+      "descrizione": "Come usare le linee guida, principi, voce e tono, checklist di revisione (capitoli 0, 1, 2 e 11)",
       "capitoli": ["come-usare", "principi", "voce-e-tono", "governance"],
-      "intro": "Queste linee guida servono a scrivere e rivedere i testi di PA digitale 2026: sito pubblico, area riservata, microtesti dell’interfaccia, Pec, avvisi e allegati. Lingua: italiano. Applicale a ogni testo che scrivi o proponi nel design.\n\nFile di queste linee guida:\n- `overview.md`: fonti, principi, voce e tono, checklist e governance.\n- `writing-rules.md`: linguaggio chiaro e inclusivo.\n- `conventions.md`: convenzioni redazionali.\n- `microcopy.md`: strutturare i contenuti, pulsanti, campi, errori, modali, conferme, stati vuoti.\n- `content-types.md`: avvisi, notizie, domande frequenti, guide, Pec, contenuti con valore giuridico.\n- `lexicon.md`: glossario e parole da sostituire."
+      "intro": "Queste linee guida servono a scrivere e rivedere i testi di PA digitale 2026: sito pubblico, area riservata, microtesti dell’interfaccia, Pec, avvisi e allegati. Lingua: italiano. Applicale a ogni testo che scrivi o proponi nel design.\n\nFile di queste linee guida:\n- `overview.md`: fonti, principi, voce e tono, checklist di revisione.\n- `writing-rules.md`: linguaggio chiaro e inclusivo.\n- `conventions.md`: convenzioni redazionali.\n- `microcopy.md`: strutturare i contenuti, pulsanti, campi, errori, modali, conferme, stati vuoti.\n- `content-types.md`: avvisi, notizie, domande frequenti, guide, Pec, contenuti con valore giuridico.\n- `lexicon.md`: glossario e parole da sostituire."
     },
     {"file": "writing-rules.md", "descrizione": "Linguaggio chiaro e linguaggio inclusivo (capitoli 3 e 4)", "capitoli": ["linguaggio-chiaro", "linguaggio-inclusivo"]},
     {"file": "conventions.md", "descrizione": "Convenzioni redazionali (capitolo 5)", "capitoli": ["convenzioni"]},

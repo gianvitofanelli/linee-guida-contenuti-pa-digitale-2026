@@ -223,8 +223,8 @@ def bootstrapize(body):
     body = re.sub(r"<th>", '<th scope="col">', body)
     body = re.sub(r'<table class="(\w+)">', r'<table class="table \1">', body)
     body = body.replace('<div class="tbl">', '<div class="tbl table-responsive">')
-    # Pulsanti d'esempio (non cliccabili): il primo di ogni gruppo è il pulsante primario
-    body = re.sub(r'(<p>|<br>)<span class="btn">', r'\1<span class="btn btn-primary btn-sm">', body)
+    # Pulsanti d'esempio (non cliccabili): "btn primary" nel testo = pulsante primario, "btn" = secondario
+    body = body.replace('<span class="btn primary">', '<span class="btn btn-primary btn-sm">')
     body = body.replace('<span class="btn">', '<span class="btn btn-outline-primary btn-sm">')
     return body
 
