@@ -445,7 +445,7 @@ def build():
     for c in chapters:
         if c["group"] != group:
             flush(); group, buf = c["group"], []
-        num = f'<span class="nav-num">{esc(c["num"])}</span>' if c["num"] else ""
+        num = f'<span class="nav-num">{esc(c["num"])}</span>' if c["num"] else '<span class="nav-num"></span>'
         buf.append(f'<li><a class="list-item" href="{c["slug"]}.html">{num}<span>{esc(c["title"])}</span></a></li>')
     flush()
     home = (

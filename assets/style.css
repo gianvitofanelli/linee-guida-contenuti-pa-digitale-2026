@@ -90,3 +90,5 @@ table.sino th:last-child::before{content:"✕ ";color:var(--bs-danger,#d9364f)}
 
 /* Logo di PA digitale 2026 (dal sito padigitale2026.gov.it) */
 .it-brand-wrapper a .brand-logo{display:block;width:auto;height:48px;margin-right:16px;flex:0 0 auto}
+.cards a.list-item:has(.nav-num:empty){display:block}
+.cards .nav-num:empty{display:none}
