@@ -232,13 +232,13 @@ def bootstrapize(body):
 def page(title, body, current, crumbs, extra_head=""):
     body = bootstrapize(body)
     ente, nome = esc(site["ente"]), esc(site["titolo"])
-    sub = f'{esc(site["sottotitolo"])} · versione {esc(site["versione"])}'
+    sub = f'Versione {esc(site["versione"])}'
     return f"""<!doctype html>
 <html lang="it">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>{esc(title)} · {esc(site["titolo"])} {esc(site["sottotitolo"])}</title>
+<title>{esc(title)} · {esc(site["titolo"])}</title>
 <meta name="description" content="{esc(site["descrizione"])}">
 <link rel="stylesheet" href="assets/bootstrap-italia/css/bootstrap-italia.min.css">
 <link rel="stylesheet" href="assets/style.css">
@@ -372,7 +372,7 @@ def write_exports(bodies):
     for f in export["file"]:
         text = ""
         if f.get("intro"):
-            text += "# Linee guida di content design – PA digitale 2026\n\n" + f["intro"] + "\n\n"
+            text += "# Linee guida di content design di PA digitale 2026\n\n" + f["intro"] + "\n\n"
         text += "\n".join(md[s] for s in f["capitoli"])
         files[f["file"]] = text
     comp = export["completo"]
@@ -450,7 +450,7 @@ def build():
     flush()
     home = (
         f'<article class="page home"><header class="phead"><p class="kicker">{esc(site["ente"])}</p>'
-        f'<h1>{esc(site["titolo"])} {esc(site["sottotitolo"])}</h1></header>\n'
+        f'<h1>{esc(site["titolo"])}</h1></header>\n'
         f'<p class="lead">{esc(site["descrizione"])}</p>\n<div class="row cards">{"".join(cards)}</div></article>'
     )
     (OUT / "index.html").write_text(

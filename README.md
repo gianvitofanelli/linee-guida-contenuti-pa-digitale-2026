@@ -1,4 +1,4 @@
-# Linee guida di content design – PA digitale 2026
+# Linee guida di content design di PA digitale 2026
 
 Le regole per scrivere i contenuti di PA digitale 2026: sito pubblico, area riservata, comunicazioni agli enti, assistente virtuale e allegati degli avvisi. Versione 1.2 (bozza).
 
