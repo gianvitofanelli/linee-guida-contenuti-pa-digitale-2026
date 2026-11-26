@@ -180,12 +180,11 @@ def nav_groups(current, tag="ul", cls="link-list", link_cls="list-item"):
             if group is not None:
                 out.append("</ul>")
             group = c["group"]
-            out.append(f'<ul class="{cls}"><li><h3 class="nav-group-title">{esc(group)}</h3></li>')
+            out.append(f'<ul class="{cls}"><li><h3>{esc(group)}</h3></li>')
         cur = c["slug"] == current
         attrs = ' aria-current="page"' if cur else ""
         active = " active" if cur else ""
-        num = f'<span class="nav-num">{esc(c["num"])}</span>' if c["num"] else '<span class="nav-num"></span>'
-        out.append(f'<li><a class="{link_cls} medium{active}" href="{c["slug"]}.html"{attrs}>{num}<span>{esc(c["title"])}</span></a></li>')
+        out.append(f'<li><a class="{link_cls} medium{active}" href="{c["slug"]}.html"{attrs}><span>{esc(c["title"])}</span></a></li>')
     out.append("</ul>")
     return "\n".join(out)
 
@@ -446,8 +445,7 @@ def build():
     for c in chapters:
         if c["group"] != group:
             flush(); group, buf = c["group"], []
-        num = f'<span class="nav-num">{esc(c["num"])}</span>' if c["num"] else '<span class="nav-num"></span>'
-        buf.append(f'<li><a class="list-item" href="{c["slug"]}.html">{num}<span>{esc(c["title"])}</span></a></li>')
+        buf.append(f'<li><a class="list-item" href="{c["slug"]}.html"><span>{esc(c["title"])}</span></a></li>')
     flush()
     home = (
         f'<article class="page home"><header class="phead"><p class="kicker">{esc(site["ente"])}</p>'

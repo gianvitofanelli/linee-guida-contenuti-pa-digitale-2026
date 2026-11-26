@@ -2,15 +2,8 @@
    Qui c'è solo ciò che Bootstrap Italia non offre: tabelle Sì/No, schede impilate su mobile,
    impaginazione del testo dei capitoli. Colori e font vengono dalle variabili di Bootstrap Italia. */
 
-/* Sidebar dei capitoli */
+/* Barra laterale: solo il comportamento sticky, il resto è Bootstrap Italia */
 .sidebar-sticky{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;padding-right:8px}
-.link-list-wrapper h3.nav-group-title,h3.nav-group-title{margin:16px 0 8px;padding:0;font-size:1.15rem;line-height:1.75;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--bs-body-color,#1a1a1a)}
-.nav-group-title:first-child{margin-top:0}
-.link-list a.list-item{display:grid;grid-template-columns:2.75rem 1fr;gap:0;align-items:baseline}
-.page-toc .link-list a.list-item{display:block}
-.nav-num{white-space:nowrap;color:var(--bs-secondary,#5c6f82);font-variant-numeric:tabular-nums;font-size:.875rem}
-.menu-wrapper h3.nav-group-title{padding:0 24px}
-.menu-wrapper .link-list a.list-item{padding-left:24px}
 
 /* Pagina */
 .page{display:flex;flex-direction:column;gap:24px}
@@ -63,7 +56,6 @@ table.sino th:last-child::before{content:"✕ ";color:var(--bs-danger,#d9364f)}
 /* Home */
 .cards .card-wrapper{height:100%}
 .cards .card{height:100%}
-.cards .nav-num{display:inline-block}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 
@@ -89,8 +81,6 @@ table.sino th:last-child::before{content:"✕ ";color:var(--bs-danger,#d9364f)}
 
 /* Logo di PA digitale 2026 (dal sito padigitale2026.gov.it) */
 .it-brand-wrapper a .brand-logo{display:block;width:auto;height:48px;margin-right:16px;flex:0 0 auto}
-.cards a.list-item:has(.nav-num:empty){display:block}
-.cards .nav-num:empty{display:none}
 
 /* Pulsanti d'esempio: spazio dal testo che li precede */
 .prose br+.btn{margin-top:12px}
@@ -103,6 +93,3 @@ table.sino th:last-child::before{content:"✕ ";color:var(--bs-danger,#d9364f)}
   .prose table.sino thead th:last-child{background-color:#fbeaed;box-shadow:inset 0 -2px 0 var(--bs-danger,#d9364f)}
 }
 
-/* Numeri dei capitoli: allineati al titolo del gruppo e vicini al testo */
-#sidebar .link-list-wrapper .link-list li a.list-item,
-.cards .link-list-wrapper .link-list li a.list-item{padding-left:0;grid-template-columns:2rem 1fr}
