@@ -103,3 +103,7 @@ table.sino th:last-child::before{content:"✕ ";color:var(--bs-danger,#d9364f)}
   .prose table.sino thead th:first-child{background-color:#e7f4ef;box-shadow:inset 0 -2px 0 var(--bs-success,#008758)}
   .prose table.sino thead th:last-child{background-color:#fbeaed;box-shadow:inset 0 -2px 0 var(--bs-danger,#d9364f)}
 }
+
+/* Numeri dei capitoli: allineati al titolo del gruppo e vicini al testo */
+#sidebar .link-list-wrapper .link-list li a.list-item,
+.cards .link-list-wrapper .link-list li a.list-item{padding-left:0;grid-template-columns:2rem 1fr}
