@@ -17,7 +17,7 @@
 .page{display:flex;flex-direction:column;gap:24px}
 .phead .kicker{margin:0;font-size:.875rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--bs-primary)}
 .phead h1{margin:2px 0 0;text-wrap:balance}
-.lead{max-width:68ch;margin:0}
+.lead{max-width:68ch;margin:0;font-size:1.25rem;line-height:1.6;color:var(--bs-secondary, #5c6f82)}
 .page-toc{border-left:2px solid var(--bs-border-color,#d9dadb);padding-left:16px}
 .page-toc p{margin:0 0 4px}
 .page-toc .link-list{display:flex;flex-wrap:wrap;gap:0 20px}
