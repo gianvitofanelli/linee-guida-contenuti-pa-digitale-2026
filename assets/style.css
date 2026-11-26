@@ -4,11 +4,10 @@
 
 /* Sidebar dei capitoli */
 .sidebar-sticky{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;padding-right:8px}
-.link-list-wrapper h3.nav-group-title,h3.nav-group-title{margin:20px 0 4px;padding:0;font-size:.8125rem;line-height:1.4;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--bs-secondary,#5c6f82)}
+.link-list-wrapper h3.nav-group-title,h3.nav-group-title{margin:16px 0 8px;padding:0;font-size:1.15rem;line-height:1.75;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--bs-body-color,#1a1a1a)}
 .nav-group-title:first-child{margin-top:0}
 .link-list a.list-item{display:grid;grid-template-columns:2.75rem 1fr;gap:0;align-items:baseline}
 .page-toc .link-list a.list-item{display:block}
-.link-list a.list-item.active{font-weight:700}
 .nav-num{white-space:nowrap;color:var(--bs-secondary,#5c6f82);font-variant-numeric:tabular-nums;font-size:.875rem}
 .menu-wrapper h3.nav-group-title{padding:0 24px}
 .menu-wrapper .link-list a.list-item{padding-left:24px}
@@ -26,7 +25,7 @@
 .page-actions{display:flex;flex-wrap:wrap;gap:8px 24px;margin:0;font-size:.9375rem}
 .prose{max-width:68ch;min-width:0}
 .prose>*:first-child{margin-top:0}
-.prose>p:first-child{font-size:1.25rem;color:var(--bs-secondary,#5c6f82)}
+.prose>p:first-child{font-size:1.25rem;color:#455b71}
 .prose h2{margin:2em 0 .4em;text-wrap:balance}
 .prose h3{margin:1.6em 0 .3em}
 .prose blockquote{margin:1em 0;padding:12px 20px;background:var(--bs-primary-bg-subtle,#f2f7fc);border:1px solid var(--bs-primary-border-subtle,#d3e2f3);font-size:1rem;font-weight:400;line-height:1.5}
