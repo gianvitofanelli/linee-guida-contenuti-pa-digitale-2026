@@ -1,4 +1,4 @@
-# Linee guida di content design – PA digitale 2026
+# Linee guida di content design di PA digitale 2026
 
 Le regole per scrivere i contenuti di PA digitale 2026: sito pubblico, area riservata, comunicazioni agli enti, assistente virtuale e allegati degli avvisi. Versione 1.2 (bozza).
 
@@ -12,7 +12,7 @@ Il testo sta nei file di `content/`, un file per capitolo. Il sito si genera da 
 | Ordine, titoli e gruppi dei capitoli | `chapters.json` |
 | Nome del sito, versione, indirizzo del repository | `site.json` |
 | File .md da scaricare (quali capitoli in ogni file) | `esportazioni.json` |
-| Aspetto e comportamento del sito | `assets/style.css`, `assets/site.js` |
+| Aspetto e comportamento del sito | `assets/bootstrap-italia/` (Bootstrap Italia 2.18.3, copia locale), `assets/style.css` (estensioni), `assets/site.js` |
 | Generatore del sito | `build.py` |
 | Pubblicazione su GitHub Pages | `.github/workflows/pages.yml` |
 
@@ -22,7 +22,7 @@ Il testo sta nei file di `content/`, un file per capitolo. Il sito si genera da 
 - **Proporre una modifica senza scrivere il testo:** apri una issue con il modulo "Proposta di modifica".
 - **Nuova versione:** aggiorna `site.json` e `CHANGELOG.md` (numero, data, elenco delle modifiche).
 
-Le regole di scrittura per i capitoli sono quelle del capitolo 0 e del capitolo 11 (governance).
+Le regole di scrittura per i capitoli sono quelle del capitolo 0 e del capitolo 11 (checklist).
 
 ## Generare il sito in locale
 
@@ -39,6 +39,10 @@ python -m http.server --directory _site 8000
 ```
 
 e apri `http://localhost:8000`.
+
+## Aggiornare Bootstrap Italia
+
+Il sito usa una copia locale di [Bootstrap Italia](https://italia.github.io/bootstrap-italia/) in `assets/bootstrap-italia/`; la versione è scritta in `assets/bootstrap-italia/VERSION.md`. Per aggiornarla, sostituisci i file con quelli del pacchetto npm `bootstrap-italia` (cartella `dist/`) e prova il sito in locale.
 
 ## Pubblicare su GitHub Pages
 

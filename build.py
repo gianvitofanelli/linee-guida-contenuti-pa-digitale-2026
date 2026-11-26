@@ -18,6 +18,7 @@ export = json.loads((ROOT / "esportazioni.json").read_text(encoding="utf8"))
 
 
 # ---- Esportazione in Markdown (HTML dei capitoli -> .md) ----
+SEP = '<span class="separator">/</span>'
 VOID = {"br", "hr", "img", "meta", "link", "input"}
 
 
@@ -166,27 +167,42 @@ def kb(n):
     return f"{max(1, round(n / 1024))} kB"
 
 
-def nav_html(current):
+def icon(name, cls=""):
+    c = f"icon {cls}".strip()
+    return f'<svg class="{c}" aria-hidden="true"><use href="assets/bootstrap-italia/svg/sprites.svg#it-{name}"></use></svg>'
+
+
+def nav_groups(current, tag="ul", cls="link-list", link_cls="list-item"):
+    """Elenco dei capitoli raggruppati, con il capitolo corrente segnato da aria-current."""
     out, group = [], None
     for c in chapters:
         if c["group"] != group:
             if group is not None:
-                out.append("</ul></div>")
+                out.append("</ul>")
             group = c["group"]
-            out.append(f'<div class="nav-group"><p class="nav-label">{esc(group)}</p><ul>')
-        cur = ' aria-current="page"' if c["slug"] == current else ""
+            out.append(f'<h3 class="nav-group-title">{esc(group)}</h3><ul class="{cls}">')
+        cur = c["slug"] == current
+        attrs = ' aria-current="page"' if cur else ""
+        active = " active" if cur else ""
         num = f'<span class="nav-num">{esc(c["num"])}</span>' if c["num"] else '<span class="nav-num"></span>'
-        out.append(f'<li><a href="{c["slug"]}.html"{cur}>{num}<span>{esc(c["title"])}</span></a></li>')
-    out.append("</ul></div>")
+        out.append(f'<li><a class="{link_cls}{active}" href="{c["slug"]}.html"{attrs}>{num}<span>{esc(c["title"])}</span></a></li>')
+    out.append("</ul>")
     return "\n".join(out)
+
+
+def nav_html(current):
+    return nav_groups(current)
 
 
 def toc_html(body):
     items = re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', body)
     if len(items) < 2:
         return ""
-    lis = "".join(f'<li><a href="#{i}">{t}</a></li>' for i, t in items)
-    return f'<nav class="page-toc" aria-label="In questa pagina"><p>In questa pagina</p><ul>{lis}</ul></nav>'
+    lis = "".join(f'<li><a class="list-item" href="#{i}"><span>{t}</span></a></li>' for i, t in items)
+    return (
+        '<nav class="page-toc" aria-labelledby="page-toc-title"><p class="h6 text-uppercase" id="page-toc-title">In questa pagina</p>'
+        f'<div class="link-list-wrapper"><ul class="link-list">{lis}</ul></div></nav>'
+    )
 
 
 def edit_links(c):
@@ -196,59 +212,150 @@ def edit_links(c):
     b = site.get("branch", "main")
     return (
         '<p class="page-actions">'
-        f'<a href="{repo}/edit/{b}/content/{c["file"]}">Modifica questo capitolo su GitHub</a>'
-        f'<a href="{repo}/issues/new?template=proposta-di-modifica.yml&amp;title={esc(c["title"])}">Proponi una modifica</a>'
+        f'<a class="d-inline-flex align-items-center" href="{repo}/edit/{b}/content/{c["file"]}">{icon("pencil", "icon-sm icon-primary me-1")}Modifica questo capitolo su GitHub</a>'
+        f'<a class="d-inline-flex align-items-center" href="{repo}/issues/new?template=proposta-di-modifica.yml&amp;title={esc(c["title"])}">{icon("comment", "icon-sm icon-primary me-1")}Proponi una modifica</a>'
         "</p>"
     )
 
 
-def page(title, body, current, crumbs, extra_head=""):
+def bootstrapize(body):
+    """Aggiunge le classi di Bootstrap Italia al testo dei capitoli (il testo in content/ resta HTML semplice)."""
     body = re.sub(r"<th>", '<th scope="col">', body)
+    body = re.sub(r'<table class="(\w+)">', r'<table class="table \1">', body)
+    body = body.replace('<div class="tbl">', '<div class="tbl table-responsive">')
+    # Pulsanti d'esempio (non cliccabili): "btn primary" nel testo = pulsante primario, "btn" = secondario
+    body = body.replace('<span class="btn primary">', '<span class="btn btn-primary btn-sm">')
+    body = body.replace('<span class="btn">', '<span class="btn btn-outline-primary btn-sm">')
+    return body
+
+
+def page(title, body, current, crumbs, extra_head=""):
+    body = bootstrapize(body)
+    ente, nome = esc(site["ente"]), esc(site["titolo"])
+    sub = f'Versione {esc(site["versione"])}'
     return f"""<!doctype html>
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)} · {esc(site["titolo"])} {esc(site["sottotitolo"])}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>{esc(title)} · {esc(site["titolo"])}</title>
+<meta name="description" content="{esc(site["descrizione"])}">
+<link rel="stylesheet" href="assets/bootstrap-italia/css/bootstrap-italia.min.css">
 <link rel="stylesheet" href="assets/style.css">
 {extra_head}
 </head>
 <body>
-<a class="skip" href="#contenuto">Vai al contenuto</a>
-<header class="site-header">
-  <div class="slim"><div class="wrap"><span>{esc(site["ente"])}</span></div></div>
-  <div class="center"><div class="wrap center-in">
-    <a class="brand" href="index.html"><span class="brand-name">{esc(site["titolo"])}</span><span class="brand-sub">{esc(site["sottotitolo"])} · versione {esc(site["versione"])}</span></a>
-    <div class="header-tools">
-      <button type="button" class="tool-btn" id="search-toggle" aria-expanded="false" aria-controls="search-box"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15zm5.5-2 5 5"/></svg><span>Cerca</span></button>
-      <button type="button" class="tool-btn" id="nav-toggle" aria-expanded="false" aria-controls="nav"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg><span>Capitoli</span></button>
-    </div>
-    <div class="search" role="search" id="search-box">
-      <label for="q">Cerca nelle linee guida</label>
-      <input id="q" type="search" placeholder="Per esempio: Pec, grassetto, CUP" autocomplete="off" aria-controls="results" aria-describedby="q-status">
-      <div id="results" class="results" hidden></div>
-      <p id="q-status" class="sr" role="status" aria-live="polite"></p>
-    </div>
-  </div></div>
-</header>
-<div class="wrap layout">
-  <div class="nav-backdrop" id="nav-backdrop" hidden></div>
-  <aside class="sidebar" id="sidebar">
-    <nav id="nav" aria-label="Capitoli">
-      <div class="nav-head"><span>Capitoli</span><button type="button" class="tool-btn tool-close" id="nav-close"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 5l14 14M19 5L5 19"/></svg><span>Chiudi</span></button></div>
-{nav_html(current)}
-    </nav>
-  </aside>
-  <main id="contenuto" class="main" tabindex="-1">
-    <nav class="crumbs" aria-label="Percorso"><ol>{crumbs}</ol></nav>
-{body}
-  </main>
+<div class="skiplinks">
+  <a class="visually-hidden-focusable" href="#contenuto">Vai al contenuto</a>
 </div>
-<footer class="site-footer"><div class="wrap">{esc(site["ente"])} · {esc(site["titolo"])} {esc(site["sottotitolo"])} · versione {esc(site["versione"])}</div></footer>
-<button type="button" class="back-to-top" id="back-to-top" aria-label="Torna all’inizio della pagina"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="24" height="24"><path fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg></button>
+<header class="it-header-wrapper">
+  <div class="it-header-slim-wrapper">
+    <div class="container"><div class="row"><div class="col-12"><div class="it-header-slim-wrapper-content">
+      <span class="navbar-brand">{ente}</span>
+    </div></div></div></div>
+  </div>
+  <div class="it-nav-wrapper">
+    <div class="it-header-center-wrapper">
+      <div class="container"><div class="row"><div class="col-12"><div class="it-header-center-content-wrapper">
+        <div class="it-brand-wrapper">
+          <a href="index.html">
+            <img class="brand-logo" src="assets/logo-pa-digitale-2026.svg" alt="" width="49" height="48">
+            <div class="it-brand-text">
+              <div class="it-brand-title">{nome}</div>
+              <div class="it-brand-tagline d-none d-md-block">{sub}</div>
+            </div>
+          </a>
+        </div>
+        <div class="it-right-zone">
+          <div class="it-search-wrapper">
+            <span class="d-none d-md-block">Cerca</span>
+            <a class="search-link rounded-icon" href="#search-modal" role="button" aria-label="Cerca nelle linee guida" aria-haspopup="dialog" data-bs-toggle="modal" data-bs-target="#search-modal">{icon("search", "")}</a>
+          </div>
+        </div>
+      </div></div></div></div>
+    </div>
+    <div class="it-header-navbar-wrapper d-lg-none">
+      <div class="container"><div class="row"><div class="col-12">
+        <nav class="navbar navbar-expand-lg" aria-label="Capitoli">
+          <button class="custom-navbar-toggler" type="button" aria-controls="menu-capitoli" aria-expanded="false" aria-label="Mostra o nascondi l’elenco dei capitoli" data-bs-target="#menu-capitoli" data-bs-toggle="navbarcollapsible">{icon("burger", "")}</button>
+          <div class="navbar-collapsable" id="menu-capitoli">
+            <div class="overlay" style="display:none"></div>
+            <div class="close-div"><button class="btn close-menu" type="button"><span class="visually-hidden">Nascondi l’elenco dei capitoli</span>{icon("close-big", "")}</button></div>
+            <div class="menu-wrapper">
+              <div class="link-list-wrapper menu-link-list">
+{nav_groups(current)}
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="modal fade" id="search-modal" tabindex="-1" aria-labelledby="search-modal-title" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="search-modal-title">Cerca nelle linee guida</h2>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Chiudi la ricerca">{icon("close", "icon-sm")}</button>
+      </div>
+      <div class="modal-body">
+        <form role="search" id="search-form" action="#" onsubmit="return false">
+          <div class="form-group">
+            <label for="q">Cerca per parola, per esempio Pec, grassetto o CUP</label>
+            <input id="q" type="search" class="form-control" autocomplete="off" aria-controls="results" aria-describedby="q-status">
+          </div>
+        </form>
+        <p id="q-status" class="visually-hidden" role="status" aria-live="polite"></p>
+        <div id="results" class="results link-list-wrapper" hidden></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="main-container">
+  <div class="row"><div class="col-12">
+    <nav class="breadcrumb-container" aria-label="Percorso"><ol class="breadcrumb">{crumbs}</ol></nav>
+  </div></div>
+  <div class="row pb-5">
+    <aside class="col-lg-3 d-none d-lg-block" id="sidebar" aria-label="Capitoli">
+      <div class="sidebar-wrapper it-line-right-side sidebar-sticky">
+        <div class="sidebar-linklist-wrapper">
+          <div class="link-list-wrapper">
+{nav_groups(current)}
+          </div>
+        </div>
+      </div>
+    </aside>
+    <main id="contenuto" class="col-12 col-lg-9" tabindex="-1">
+{body}
+    </main>
+  </div>
+</div>
+
+<footer class="it-footer">
+  <div class="it-footer-main">
+    <div class="container">
+      <section>
+        <div class="row clearfix"><div class="col-sm-12"><div class="it-brand-wrapper">
+          <a href="index.html">
+            <img class="brand-logo" src="assets/logo-pa-digitale-2026.svg" alt="" width="49" height="48">
+            <div class="it-brand-text">
+              <div class="it-brand-title">{nome}</div>
+              <div class="it-brand-tagline d-none d-md-block">{ente} · {sub}</div>
+            </div>
+          </a>
+        </div></div></div>
+      </section>
+    </div>
+  </div>
+</footer>
+
+<a href="#" aria-hidden="true" tabindex="-1" data-bs-toggle="backtotop" class="back-to-top back-to-top-small">{icon("arrow-up", "icon-light")}</a>
+
+<script>window.__PUBLIC_PATH__ = "assets/bootstrap-italia/fonts";</script>
+<script src="assets/bootstrap-italia/js/bootstrap-italia.min.js"></script>
 <script src="assets/site.js"></script>
 </body>
 </html>
@@ -265,7 +372,7 @@ def write_exports(bodies):
     for f in export["file"]:
         text = ""
         if f.get("intro"):
-            text += "# Linee guida di content design – PA digitale 2026\n\n" + f["intro"] + "\n\n"
+            text += "# Linee guida di content design di PA digitale 2026\n\n" + f["intro"] + "\n\n"
         text += "\n".join(md[s] for s in f["capitoli"])
         files[f["file"]] = text
     comp = export["completo"]
@@ -283,13 +390,13 @@ def write_exports(bodies):
         size = kb((dl / name).stat().st_size)
         return (
             f'<tr><td><code>{esc(name)}</code></td><td>{esc(desc)}</td>'
-            f'<td><a class="dl" href="download/{esc(name)}" download>Scarica<span class="sr"> {esc(name)}</span> (MD, {size})</a></td></tr>'
+            f'<td><a class="btn btn-outline-primary btn-sm text-nowrap" href="download/{esc(name)}" download>{icon("download", "icon-sm icon-primary me-1")}Scarica<span class="visually-hidden"> {esc(name)}</span> (MD, {size})</a></td></tr>'
         )
 
     rows = "".join(row(f["file"], f["descrizione"]) for f in export["file"])
     rows += row(comp["file"], comp["descrizione"])
     zrow = (
-        f'<p><a class="dl dl-main" href="download/{esc(export["zip"])}" download>Scarica tutti i file '
+        f'<p><a class="btn btn-primary" href="download/{esc(export["zip"])}" download>{icon("download", "icon-sm icon-white me-1")}Scarica tutti i file '
         f'(ZIP, {kb((dl / export["zip"]).stat().st_size)})</a></p>'
     )
     return (
@@ -302,8 +409,7 @@ def build():
     if OUT.exists():
         shutil.rmtree(OUT)
     (OUT / "assets").mkdir(parents=True)
-    for f in (ROOT / "assets").iterdir():
-        shutil.copy(f, OUT / "assets" / f.name)
+    shutil.copytree(ROOT / "assets", OUT / "assets", dirs_exist_ok=True)
     (OUT / ".nojekyll").write_text("")
 
     bodies = {c["slug"]: (ROOT / "content" / c["file"]).read_text(encoding="utf8").strip() for c in chapters}
@@ -318,36 +424,37 @@ def build():
         nxt = chapters[n + 1] if n + 1 < len(chapters) else None
         pn = ""
         if prev:
-            pn += f'<a class="pn prev" href="{prev["slug"]}.html"><span>Precedente</span>{esc(prev["title"])}</a>'
+            pn += f'<a class="pn prev" href="{prev["slug"]}.html">{icon("arrow-left", "icon-sm icon-primary")}<span class="pn-text"><span class="pn-label">Precedente</span>{esc(prev["title"])}</span></a>'
         if nxt:
-            pn += f'<a class="pn next" href="{nxt["slug"]}.html"><span>Successivo</span>{esc(nxt["title"])}</a>'
+            pn += f'<a class="pn next" href="{nxt["slug"]}.html"><span class="pn-text"><span class="pn-label">Successivo</span>{esc(nxt["title"])}</span>{icon("arrow-right", "icon-sm icon-primary")}</a>'
         article = (
             f'<article class="page">\n<header class="phead"><p class="kicker">{esc(c["kicker"])}</p><h1>{esc(c["title"])}</h1></header>\n'
-            f'{toc_html(body)}\n<div class="prose">\n{body}\n</div>\n{edit_links(c)}\n<footer class="pnav">{pn}</footer>\n</article>'
+            f'{toc_html(body)}\n<div class="prose">\n{body}\n</div>\n{edit_links(c)}\n<nav class="pnav" aria-label="Capitoli precedente e successivo">{pn}</nav>\n</article>'
         )
         crumbs = (
-            '<li><a href="index.html">Home</a></li>'
-            f'<li>{esc(c["group"])}</li><li aria-current="page">{esc(c["title"])}</li>'
+            f'<li class="breadcrumb-item"><a href="index.html">Home</a>{SEP}</li>'
+            f'<li class="breadcrumb-item">{esc(c["group"])}{SEP}</li>'
+            f'<li class="breadcrumb-item active" aria-current="page">{esc(c["title"])}</li>'
         )
         (OUT / f'{c["slug"]}.html').write_text(page(c["title"], article, c["slug"], crumbs), encoding="utf8")
 
     cards, group, buf = [], None, []
     def flush():
         if group is not None:
-            cards.append(f'<section class="card"><h2>{esc(group)}</h2><ul>{"".join(buf)}</ul></section>')
+            cards.append(f'<div class="col-md-6 col-xl-4"><div class="card-wrapper card-space"><section class="card card-bg no-after"><div class="card-body"><h2 class="card-title h5">{esc(group)}</h2><div class="link-list-wrapper"><ul class="link-list">{"".join(buf)}</ul></div></div></section></div></div>')
     for c in chapters:
         if c["group"] != group:
             flush(); group, buf = c["group"], []
-        num = f'<span class="nav-num">{esc(c["num"])}</span>' if c["num"] else ""
-        buf.append(f'<li><a href="{c["slug"]}.html">{num}{esc(c["title"])}</a></li>')
+        num = f'<span class="nav-num">{esc(c["num"])}</span>' if c["num"] else '<span class="nav-num"></span>'
+        buf.append(f'<li><a class="list-item" href="{c["slug"]}.html">{num}<span>{esc(c["title"])}</span></a></li>')
     flush()
     home = (
         f'<article class="page home"><header class="phead"><p class="kicker">{esc(site["ente"])}</p>'
-        f'<h1>{esc(site["titolo"])} {esc(site["sottotitolo"])}</h1></header>\n'
-        f'<p class="lead">{esc(site["descrizione"])}</p>\n<div class="cards">{"".join(cards)}</div></article>'
+        f'<h1>{esc(site["titolo"])}</h1></header>\n'
+        f'<p class="lead">{esc(site["descrizione"])}</p>\n<div class="row cards">{"".join(cards)}</div></article>'
     )
     (OUT / "index.html").write_text(
-        page("Home", home, "", '<li aria-current="page">Home</li>'), encoding="utf8"
+        page("Home", home, "", '<li class="breadcrumb-item active" aria-current="page">Home</li>'), encoding="utf8"
     )
     (OUT / "assets" / "search-index.json").write_text(json.dumps(index, ensure_ascii=False), encoding="utf8")
     print(f"Sito generato in {OUT} ({len(chapters)} capitoli)")

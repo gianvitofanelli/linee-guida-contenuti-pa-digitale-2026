@@ -1,61 +1,5 @@
-/* Indice dei capitoli su mobile, ricerca tra i capitoli, evidenziazione del termine cercato. */
+/* Menu, ricerca (finestra modale) e pulsante Torna su sono di Bootstrap Italia. Qui: tabelle, ricerca tra i capitoli, evidenziazione del termine cercato. */
 (function () {
-  var toggle = document.getElementById('nav-toggle');
-  var side = document.getElementById('sidebar');
-  var backdrop = document.getElementById('nav-backdrop');
-  var closeBtn = document.getElementById('nav-close');
-  var mq = window.matchMedia('(max-width: 900px)');
-  function setNav(open) {
-    if (!side) return;
-    side.classList.toggle('open', open);
-    backdrop.hidden = !open;
-    document.body.classList.toggle('nav-open', open);
-    toggle.setAttribute('aria-expanded', String(open));
-    if (mq.matches) {
-      if (open) { side.setAttribute('role', 'dialog'); side.setAttribute('aria-modal', 'true'); side.setAttribute('aria-label', 'Capitoli'); var cur = side.querySelector('[aria-current="page"]') || side.querySelector('a'); (cur || closeBtn).focus(); }
-      else { side.removeAttribute('role'); side.removeAttribute('aria-modal'); side.removeAttribute('aria-label'); }
-    }
-  }
-  if (toggle && side) {
-    toggle.addEventListener('click', function () { setNav(!side.classList.contains('open')); });
-    closeBtn.addEventListener('click', function () { setNav(false); toggle.focus(); });
-    backdrop.addEventListener('click', function () { setNav(false); toggle.focus(); });
-    side.addEventListener('keydown', function (e) {
-      if (!side.classList.contains('open') || !mq.matches) return;
-      if (e.key === 'Escape') { setNav(false); toggle.focus(); return; }
-      if (e.key === 'Tab') {
-        var f = side.querySelectorAll('a[href],button'); var first = f[0], last = f[f.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-      }
-    });
-    side.addEventListener('click', function (e) { if (e.target.closest('a') && mq.matches) setNav(false); });
-    (mq.addEventListener ? mq.addEventListener.bind(mq, 'change') : mq.addListener.bind(mq))(function () { setNav(false); });
-  }
-
-  // Ricerca comprimibile su mobile
-  var sBtn = document.getElementById('search-toggle');
-  var sBox = document.getElementById('search-box');
-  if (sBtn && sBox) {
-    sBtn.addEventListener('click', function () {
-      var open = sBox.classList.toggle('open');
-      sBtn.setAttribute('aria-expanded', String(open));
-      if (open) document.getElementById('q').focus();
-    });
-  }
-
-  // Torna su
-  var top = document.getElementById('back-to-top');
-  if (top) {
-    function vis() { top.classList.toggle('show', (window.pageYOffset || document.documentElement.scrollTop) > 300); }
-    window.addEventListener('scroll', vis, { passive: true }); vis();
-    top.addEventListener('click', function () {
-      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-      var brand = document.querySelector('.brand'); if (brand) brand.focus({ preventScroll: true });
-    });
-  }
-
   // Tabelle a schede su schermi stretti: struttura visiva a blocchi, semantica di tabella ripristinata con i ruoli ARIA
   var narrowMq = window.matchMedia('(max-width: 600px)');
   function stackTables() {
@@ -142,16 +86,15 @@
   if (input) {
     input.addEventListener('input', function () { render(input.value); });
     input.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') { box.hidden = true; }
       if (e.key === 'ArrowDown') { var a = box.querySelector('a'); if (a && !box.hidden) { e.preventDefault(); a.focus(); } }
     });
     box.addEventListener('keydown', function (e) {
       var links = Array.prototype.slice.call(box.querySelectorAll('a')), i = links.indexOf(document.activeElement);
       if (e.key === 'ArrowDown' && i >= 0) { e.preventDefault(); (links[i + 1] || links[i]).focus(); }
       if (e.key === 'ArrowUp' && i >= 0) { e.preventDefault(); (i ? links[i - 1] : input).focus(); }
-      if (e.key === 'Escape') { box.hidden = true; input.focus(); }
     });
-    document.addEventListener('click', function (e) { if (!box.contains(e.target) && e.target !== input) box.hidden = true; });
+    var modalEl = document.getElementById('search-modal');
+    if (modalEl) modalEl.addEventListener('shown.bs.modal', function () { input.focus(); });
   }
 
   var q = new URLSearchParams(location.search).get('q');
